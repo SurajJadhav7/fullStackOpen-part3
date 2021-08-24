@@ -2,6 +2,10 @@ const express = require('express');
 const app = express();
 app.use(express.json());
 
+app.listen(3001, () => {
+    console.log('Example app listening on port 3001!');
+});
+
 app.get('/', (req, res) => {
     res.send('Hello World!');
 });
@@ -33,6 +37,8 @@ app.get('/api/persons', (req, res) => {
     res.json(notes);
 });
 
-app.listen(3001, () => {
-    console.log('Example app listening on port 3001!');
+app.get('/info', (req, res) => {
+    res.write(`<p>Phonebook has info for ${notes.length} people</p>`);
+    res.write(`<p>${new Date()}</p>`);
+    res.send();
 });
