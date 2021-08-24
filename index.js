@@ -10,7 +10,7 @@ app.get('/', (req, res) => {
     res.send('Hello World!');
 });
 
-const notes = [
+let notes = [
     { 
       "id": 1,
       "name": "Arto Hellas", 
@@ -66,6 +66,13 @@ app.delete('/api/persons/:id', (req, res) => {
 
 app.post('/api/persons', (req, res) => {
     const { name, number } = req.body;
+    if (!name || !number) {
+        return res.send({ error: 'The name or number is missing' });
+    } 
+    const alreadyPresent = notes.find(note => note.name === name);
+    if (alreadyPresent) {
+        return res.send({ error: 'Name is already present' });
+    }
     const note = { 
         "id": Math.floor(Math.random()*1000),
         "name": name, 
