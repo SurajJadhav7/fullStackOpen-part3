@@ -42,3 +42,13 @@ app.get('/info', (req, res) => {
     res.write(`<p>${new Date()}</p>`);
     res.send();
 });
+
+app.get('/api/persons/:id', (req, res) => {
+    const id = req.params.id;
+    const note = notes.find(note => note.id == id);
+    if (note) {
+        res.json(note);
+    } else {
+        res.status(404).send('Not found');
+    }
+});
