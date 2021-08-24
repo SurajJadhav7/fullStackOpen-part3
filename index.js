@@ -52,3 +52,14 @@ app.get('/api/persons/:id', (req, res) => {
         res.status(404).send('Not found');
     }
 });
+
+app.delete('/api/persons/:id', (req, res) => {
+    const id = req.params.id;
+    const note = notes.find(note => note.id == id);
+    if (note) {
+        notes.splice(notes.indexOf(note), 1);
+        res.status(204).json(note);
+    } else {
+        res.status(404).send('Not found');
+    }
+});
