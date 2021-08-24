@@ -63,3 +63,14 @@ app.delete('/api/persons/:id', (req, res) => {
         res.status(404).send('Not found');
     }
 });
+
+app.post('/api/persons', (req, res) => {
+    const { name, number } = req.body;
+    const note = { 
+        "id": Math.floor(Math.random()*1000),
+        "name": name, 
+        "number": number
+    };
+    notes = notes.concat(note);
+    res.send(note);
+});
