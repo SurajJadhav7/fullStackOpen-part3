@@ -2,6 +2,18 @@ const express = require('express');
 const app = express();
 app.use(express.json());
 
+const morgan = require('morgan');
+app.use(morgan('tiny'));
+
+// Middleware
+const unknownEndpoint = (req, res) => {
+    res.status(404).send({ 
+        error: 'Unknown endpoint' 
+    });
+}
+// app.use(unknownEndpoint);
+
+// Listener
 app.listen(3001, () => {
     console.log('Example app listening on port 3001!');
 });
