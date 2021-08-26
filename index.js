@@ -23,7 +23,7 @@ app.get('/', (req, res) => {
     res.send('Hello World!');
 });
 
-let notes = [
+let phonebook = [
     { 
       "id": 1,
       "name": "Arto Hellas", 
@@ -47,18 +47,18 @@ let notes = [
 ];
 
 app.get('/api/persons', (req, res) => {
-    res.json(notes);
+    res.json(phonebook);
 });
 
 app.get('/info', (req, res) => {
-    res.write(`<p>Phonebook has info for ${notes.length} people</p>`);
+    res.write(`<p>Phonebook has info for ${phonebook.length} people</p>`);
     res.write(`<p>${new Date()}</p>`);
     res.send();
 });
 
 app.get('/api/persons/:id', (req, res) => {
     const id = req.params.id;
-    const note = notes.find(note => note.id == id);
+    const note = phonebook.find(note => note.id == id);
     if (note) {
         res.json(note);
     } else {
@@ -68,9 +68,9 @@ app.get('/api/persons/:id', (req, res) => {
 
 app.delete('/api/persons/:id', (req, res) => {
     const id = req.params.id;
-    const note = notes.find(note => note.id == id);
+    const note = phonebook.find(note => note.id == id);
     if (note) {
-        notes.splice(notes.indexOf(note), 1);
+        phonebook.splice(phonebook.indexOf(note), 1);
         res.status(204).json(note);
     } else {
         res.status(404).send('Not found');
@@ -82,7 +82,7 @@ app.post('/api/persons', (req, res) => {
     if (!name || !number) {
         return res.send({ error: 'The name or number is missing' });
     } 
-    const alreadyPresent = notes.find(note => note.name === name);
+    const alreadyPresent = phonebook.find(note => note.name === name);
     if (alreadyPresent) {
         return res.send({ error: 'Name is already present' });
     }
@@ -91,6 +91,6 @@ app.post('/api/persons', (req, res) => {
         "name": name, 
         "number": number
     };
-    notes = notes.concat(note);
+    phonebook = phonebook.concat(note);
     res.send(note);
 });
